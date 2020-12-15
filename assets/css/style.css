@@ -1,0 +1,62 @@
+body{
+    background-color:whitesmoke;
+    color:black;
+    margin: 0px;
+}
+
+
+#radio{
+    display: block;
+    font-size: large;
+    position: absolute;
+    left: 45vw;
+}
+
+
+form{
+    font-size: large;
+}
+
+span{
+    position: absolute;
+    left:180px;
+}
+
+table{
+    font-size: large;  
+}
+
+#table th,#table td{
+    border-bottom: 2px black solid;
+}
+
+
+#mytb{
+    border-spacing: 0;
+}
+
+#mytb th{
+    border: 2px solid black;
+    padding:2px 8px;
+}
+
+#mytb td{
+    border: 2px solid black;
+    padding:2px 8px;
+}
+
+#average{
+    float: right;
+    margin: 0 2px;
+}
+
+#average input{
+    width:50px;
+    border: 1px solid black;
+}
+
+.chart-box{
+    width: 1000px;
+    margin: 0 auto;
+    padding: 50px;
+}

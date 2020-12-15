@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8" />
+    <title>OS Scheduling Project</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <link rel="icon" type="image/png" href="assets/img/icon.png" />
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css" />
+    <link rel="stylesheet" href="assets/css/Navigation-Clean.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/radio_button.css">
+    <link rel="stylesheet" href="assets/css/table.css">
+    <link rel="stylesheet" href="assets/css/avg.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body >
+    <nav class="navbar navbar-dark navbar-expand-md navigation-clean">
+        <h2 >CPU SCHEDULAR</h2>
+        <div class="container">
+            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+                <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item" role="presentation">
+                        <a class="navbar-brand pull-sm-right m-r-0" href="https://github.com/priyanks25coder/Scheduling-Algorithms-Implementation.git"><i
+                                class="fa fa-github">Github</i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <form>
+        <div class="my-heading">
+            <h3 class="text-center">Select Your CPU Algorithm</h3>
+        </div>
+        <div style="height: 400px; padding: 5px;">
+            <div id="radio" class="container-radio">
+                <input class="option-input radio" type="radio" name="type" id="FCFS" onclick="radioClicked(this.id)">
+                <label for="FCFS">&nbsp;FCFS</label>
+                <br>
+                <input class="option-input radio" type="radio" name="type" id="SJF" onclick="radioClicked(this.id)">
+                <label for="SJF">&nbsp;SJF</label>
+                <br>
+                <input class="option-input radio" type="radio" name="type" id="RR" onclick="radioClicked(this.id)">
+                <label for="RR">&nbsp;ROUND ROBIN</label>
+                <br>
+                <input class="option-input radio" type="radio" name="type" id="LJF" onclick="radioClicked(this.id)">
+                <label for="LJF">&nbsp;LJF</label>
+                <br>
+                <input class="option-input radio" type="radio" name="type" id="PR" onclick="radioClicked(this.id)">
+                <label for="Priority">&nbsp;PRIORITY</label>
+                <br>
+                <input class="option-input radio" type="radio" name="type" id="LRTF" onclick="radioClicked(this.id)">
+                <label for="LRTF">&nbsp;LRTF</label>
+                <br>
+                <input class="option-input radio" type="radio" name="type" id="SRTF" onclick="radioClicked(this.id)">
+                <label for="SRTF">&nbsp;SRTF</label>
+                <br>
+                <br>
+            </div>
+        </div>
+
+        <div>
+            <strong>Enter Arrival Time:</strong>
+            <span><input type="number" min="0" id="AT" placeholder="Enter Arrival Time" style="height: 30px; font-family: cursive;
+                        background-color: white; color: black; border: 2px solid
+                        black;"></span>
+            <br><br>
+            <br>
+            <strong>Enter Burst Time: &nbsp</strong>
+            <span><input type="number" min="0" id="BT" placeholder="Enter Burst Time" style="height: 30px; font-family: cursive;
+                        background-color: white; color: black; border: 2px solid
+                        black;"></span>
+            <br><br>
+            <br>
+            <span id="timequanta" style="left: 0; display: none;">
+                <strong id="timetext">Enter Time Quanta: &nbsp</strong>
+                <span><input type="number" min="0" id="TQ" placeholder="Enter Time Quanta" style="height: 30px;
+                            font-family: cursive; background-color: white;
+                            color: black; border: 2px solid black;"></span>
+            </span>
+        </div>
+        <br>
+    </form>
+    <div style="height:10px; ">
+
+    </div>
+    <table id="table" style="width: 100%;">
+        <thead>
+            <tr>
+                <th colspan="9" style="width: 100%; text-align: center;font-size:larger">SCHEDULING
+                    TABLE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="PI" style="width:12%;">Process ID</td>
+                <td style="width: 12%;">ArrivalTime</td>
+                <td style="width: 12%;">Burst Time</td>
+                <td id="pcol" style="width: 10%;">Priority</td>
+                <td id="RS" style="width: 16%;">Response Time</td>
+                <td style="width: 10%;">TAT</td>
+                <td style="width: 10%;">CT</td>
+                <td style="width: 12%;">Waiting Time</td>
+                <td id="color-code" style="width:6%;">Color</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+
+    <button type="button" id="add" class="btn btn-primary" onclick="addRow()">Add a Row +</button>
+    <button type="button" id="delete" class="btn btn-danger" onclick="deleteRow()">Delete a Row -
+    </button>
+    <div class="avg-text" id="average">Avg. Completion Time = <input class="ans-avg" type="text" id="averagebox1"
+            placeholder="0" readonly></div>
+    <br><br>
+    <button type="button" class="btn btn-success" id="execute" onclick="calculate()">Execute</button>
+    <div class="avg-text" id="average">Avg. Turn Around Time = <input class="ans-avg" type="text" id="averagebox2"
+            placeholder="0" readonly> </div>
+    <br><br>
+    <div id="animator" style="display: block; position: relative;">
+        <span id="cover" style="display: block; position: absolute; margin:
+                0; top: 0; left: 2px; width: 100%; height: 100px;
+                background-color: whitesmoke; z-index: 8;">
+        </span>
+        <table id="mytb" style="display: inline; position: absolute; top:
+                2px; left: 2px;">
+            <tr id="processr"></tr>
+            <tr id="timer"></tr>
+        </table>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div id="graph-container" style="padding: 50px;">
+        <center>
+            <canvas id="myChart" width="800" height="650"></canvas>
+        </center>
+    </div>
+    <br>
+    
+</body>
+<script src="assets/js/canvasjs.min.js"></script>
+<script src="assets/js/os.js" defer></script>
+<script src="assets/js/animation.js" defer></script>
+<script src="assets/js/jquery.min.js" defer></script>
+<script src="assets/js/Chart.min.js" defer></script>
+</html>
